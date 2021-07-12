@@ -15,5 +15,6 @@
     <title>{{$title}}</title>
 
     @livewireStyles
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/0.0.0-insiders.4a070ac/tailwind.min.css" />
 </head>
 <body id="page-top">
