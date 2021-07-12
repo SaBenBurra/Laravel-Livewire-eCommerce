@@ -13,5 +13,7 @@
     @yield('custom-css')
 
     <title>{{$title}}</title>
+
+    @livewireStyles
 </head>
 <body id="page-top">
