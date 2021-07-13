@@ -18,6 +18,6 @@ Route::get('/', function () {
 });
 
 Route::group(['prefix' => 'panel', 'as' => 'panel.'], function () {
-    Route::get('/dashboard', [\App\Http\Controllers\Admin\PageController::class, 'dashboard'])->name('dashboard');
-    Route::resource('users', \App\Http\Controllers\Admin\UserController::class);
+    Route::get('dashboard', [\App\Http\Controllers\Admin\PageController::class, 'dashboard'])->name('dashboard');
+    Route::get('users', [\App\Http\Controllers\Admin\PageController::class, 'users'])->name('users');
 });
