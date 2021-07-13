@@ -12,10 +12,15 @@
     <hr class="sidebar-divider my-0">
 
     <!-- Nav Item - Dashboard -->
-    <li class="nav-item active">
+    <li class="nav-item @if(getCurrentRouteName() == 'panel.dashboard') active @endif">
         <a class="nav-link" href="{{route('panel.dashboard')}}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span></a>
+    </li>
+    <li class="nav-item @if(getCurrentRouteName() == 'panel.users') active @endif">
+        <a class="nav-link" href="{{route('panel.users')}}">
+            <i class="fas fa-users"></i>
+            <span>Users</span></a>
     </li>
 
     <!-- Divider -->
