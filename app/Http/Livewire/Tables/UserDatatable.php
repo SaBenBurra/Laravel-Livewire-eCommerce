@@ -20,7 +20,7 @@ class UserDatatable extends LivewireDatatable
             Column::name('email')->label('Email')->searchable(),
             DateColumn::name('created_at')->label('Creation Date'),
             Column::callback(['id', 'is_banned'], function($id, $isBanned) {
-                return view('livewire.panel.ban-icon', ['id' => $id, 'isBanned' => $isBanned]);
+                return view('livewire.panel.ban-toggle-button', ['id' => $id, 'isBanned' => $isBanned]);
             })->label('ban'),
         ];
     }
