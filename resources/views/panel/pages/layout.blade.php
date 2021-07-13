@@ -12,10 +12,7 @@
             <!-- End of Topbar -->
             <!-- Begin Page Content -->
             <div class="container-fluid">
-                <!-- Content Row -->
-                <div class="row">
                     @yield('content')
-                </div>
             </div>
         </div>
         <!-- Footer -->
