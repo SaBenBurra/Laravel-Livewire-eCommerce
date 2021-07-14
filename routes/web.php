@@ -22,4 +22,5 @@ Route::group(['prefix' => 'panel', 'as' => 'panel.'], function () {
     Route::get('users', [\App\Http\Controllers\Admin\PageController::class, 'users'])->name('users');
     Route::resource('category',\App\Http\Controllers\Admin\CategoryController::class);
     Route::resource('brand',\App\Http\Controllers\Admin\BrandController::class);
+    Route::resource('product',\App\Http\Controllers\Admin\ProductController::class);
 });
