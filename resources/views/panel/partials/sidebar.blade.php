@@ -28,6 +28,11 @@
             <span>Categories</span></a>
     </li>
 
+    <li class="nav-item @if(getCurrentRouteName() == 'panel.brand.index') active @endif">
+        <a class="nav-link" href="{{route('panel.brand.index')}}">
+            <i class="fas fa-sticky-note"></i>
+            <span>Brands</span></a>
+    </li>
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
 
