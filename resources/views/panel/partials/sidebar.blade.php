@@ -22,6 +22,11 @@
             <i class="fas fa-users"></i>
             <span>Users</span></a>
     </li>
+    <li class="nav-item @if(getCurrentRouteName() == 'panel.category.index') active @endif">
+        <a class="nav-link" href="{{route('panel.category.index')}}">
+            <i class="fas fa-sticky-note"></i>
+            <span>Categories</span></a>
+    </li>
 
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">

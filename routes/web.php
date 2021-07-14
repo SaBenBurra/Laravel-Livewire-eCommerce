@@ -20,4 +20,5 @@ Route::get('/', function () {
 Route::group(['prefix' => 'panel', 'as' => 'panel.'], function () {
     Route::get('dashboard', [\App\Http\Controllers\Admin\PageController::class, 'dashboard'])->name('dashboard');
     Route::get('users', [\App\Http\Controllers\Admin\PageController::class, 'users'])->name('users');
+    Route::resource('category',\App\Http\Controllers\Admin\CategoryController::class);
 });
