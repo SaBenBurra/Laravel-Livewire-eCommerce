@@ -46,15 +46,4 @@ class CategoryController extends Controller
 
         return redirect()->route('panel.category.index');
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param \App\Models\Category $category
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Category $category)
-    {
-        //
-    }
 }
