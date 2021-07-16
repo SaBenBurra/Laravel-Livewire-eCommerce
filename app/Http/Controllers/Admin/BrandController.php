@@ -9,10 +9,6 @@ use Illuminate\Http\Request;
 class BrandController extends Controller
 {
 
-    private $rules = [
-        'brandName' => 'required|max:50|unique:brands,name'
-    ];
-
     public function index()
     {
         return view('panel.pages.brands');
@@ -25,7 +21,7 @@ class BrandController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate($this->rules);
+        $request->validate(['brandName' => 'required|max:50|unique:brands,name']);
 
         Brand::create([
             'name' => $request->brandName
@@ -41,7 +37,7 @@ class BrandController extends Controller
 
     public function update(Request $request, Brand $brand)
     {
-        $request->validate($this->rules);
+        $request->validate(['brandName' => 'required|max:50|unique:brands,name,' . $brand->id]);
 
         $brand->update([
             'name' => $request->brandName

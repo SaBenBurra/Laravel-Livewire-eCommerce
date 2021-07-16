@@ -9,8 +9,6 @@ use Illuminate\Http\Request;
 class CategoryController extends Controller
 {
 
-    private $rules = ['categoryName' => 'required|max:50|unique:categories,name'];
-
     public function index()
     {
         return view('panel.pages.categories');
@@ -23,7 +21,7 @@ class CategoryController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate($this->rules);
+        $request->validate(['categoryName' => 'required|max:50|unique:categories,name']);
 
         Category::create([
             'name' => $request->categoryName
@@ -38,7 +36,7 @@ class CategoryController extends Controller
 
     public function update(Request $request, Category $category)
     {
-        $request->validate($this->rules);
+        $request->validate(['categoryName' => 'required|max:50|unique:categories,name,' . $category->id]);
 
         $category->update([
             'name' => $request->categoryName
