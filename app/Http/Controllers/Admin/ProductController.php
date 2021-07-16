@@ -45,17 +45,6 @@ class ProductController extends Controller
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param \App\Models\Product $product
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Product $product)
-    {
-        //
-    }
-
     public function edit(Product $product)
     {
         $categories = Category::all();
