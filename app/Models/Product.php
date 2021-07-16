@@ -9,7 +9,7 @@ class Product extends Model
 {
     use HasFactory;
 
-    protected $guarded = [];
+    protected $guarded = ['serial_number', 'rating_average'];
 
     public function category()
     {
