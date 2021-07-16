@@ -20,7 +20,11 @@ Route::get('/', function () {
 Route::group(['prefix' => 'panel', 'as' => 'panel.'], function () {
     Route::get('dashboard', [\App\Http\Controllers\Admin\PageController::class, 'dashboard'])->name('dashboard');
     Route::get('users', [\App\Http\Controllers\Admin\PageController::class, 'users'])->name('users');
-    Route::resource('category',\App\Http\Controllers\Admin\CategoryController::class);
-    Route::resource('brand',\App\Http\Controllers\Admin\BrandController::class);
-    Route::resource('product',\App\Http\Controllers\Admin\ProductController::class);
+
+
+    Route::resources([
+        'category' => \App\Http\Controllers\Admin\CategoryController::class,
+        'brand' => \App\Http\Controllers\Admin\BrandController::class,
+        'product' => \App\Http\Controllers\Admin\ProductController::class,
+    ], ['except' => ['show', 'destroy']]);
 });
