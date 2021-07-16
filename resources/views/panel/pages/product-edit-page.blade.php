@@ -1,6 +1,6 @@
 @extends('panel.pages.layout', ['title' => 'Category Edit Page'])
 @section('content')
-
+    <a href="{{route('panel.productImages', ['product' => $product])}}"><button class="btn btn-success">Images</button></a>
     <form method="POST" action="{{route('panel.product.update', ['product' => $product])}}">
         @csrf
         @method('PUT')
