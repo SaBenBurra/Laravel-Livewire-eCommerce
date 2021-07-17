@@ -28,5 +28,7 @@ Route::group(['prefix' => 'panel', 'as' => 'panel.'], function () {
         'product' => \App\Http\Controllers\Admin\ProductController::class,
     ], ['except' => ['show', 'destroy']]);
 
+    Route::resource('productProperty', \App\Http\Controllers\Admin\ProductPropertyController::class);
+
     Route::get('/{product}/product-images', [\App\Http\Controllers\Admin\PageController::class, 'productImages'])->name('productImages');
 });

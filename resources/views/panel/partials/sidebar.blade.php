@@ -39,6 +39,13 @@
             <i class="fas fa-sticky-note"></i>
             <span>Products</span></a>
     </li>
+
+    <li class="nav-item @if(getCurrentRouteName() == 'panel.productProperty.index') active @endif">
+        <a class="nav-link" href="{{route('panel.productProperty.index')}}">
+            <i class="fas fa-sticky-note"></i>
+            <span>Product Properties</span></a>
+    </li>
+
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
 
