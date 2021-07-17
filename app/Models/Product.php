@@ -16,14 +16,21 @@ class Product extends Model
         return $this->hasOne(Category::class);
     }
 
-    public function brand() {
+    public function brand()
+    {
         return $this->hasOne(Brand::class);
     }
 
-    public function generateSerialNumber() {
+    public function generateSerialNumber()
+    {
         $chars = '1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $serialNumber = substr(str_shuffle($chars), 0, 8);
 
         $this->serial_number = $serialNumber;
+    }
+
+    public function images()
+    {
+        return $this->hasMany(ProductImage::class)->orderBy('place_number');
     }
 }
