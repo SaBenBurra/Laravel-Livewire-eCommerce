@@ -10,4 +10,8 @@ class ProductPropertyName extends Model
     use HasFactory;
 
     protected $fillable = ['name'];
+
+    public function values() {
+        return $this->hasMany(ProductPropertyValue::class, 'property_name_id', 'id');
+    }
 }
