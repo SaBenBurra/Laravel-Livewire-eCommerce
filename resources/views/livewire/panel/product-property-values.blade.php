@@ -13,6 +13,9 @@
     </form>
     <hr/>
     <br/>
+    @error('valueToUpdate')
+    {{$message}}
+    @enderror
     @forelse($this->currentValuesAsString as $index => $value)
         <form wire:submit.prevent="updateValue({{$index}})">
             <div class="input-group mb-3" wire:key="row_{{$index}}">
@@ -26,9 +29,6 @@
                     <button wire:click="remove({{$index}})" type="button" class="btn btn-danger">remove</button>
                 </div>
             </div>
-            @error("currentValuesAsString".$index)
-            {{$message}}
-            @enderror
         </form>
     @empty
         There are no values for this property

@@ -3,7 +3,9 @@
 namespace App\Http\Livewire\Panel;
 
 use App\Models\ProductPropertyValue;
+use Illuminate\Support\Facades\Validator;
 use Livewire\Component;
+use App\Rules\ProductPropertyValueUnique;
 
 class ProductPropertyValues extends Component
 {
@@ -12,9 +14,12 @@ class ProductPropertyValues extends Component
     public $currentValues;
     public $currentValuesAsString;
 
-    protected $rules = [
-        'newValue' => 'required|max:50|unique:product_property_values,value'
-    ];
+    public function rules()
+    {
+        return [
+            'newValue' => ['required', 'max:50', new ProductPropertyValueUnique($this->productPropertyName->id)],
+        ];
+    }
 
     public function render()
     {
@@ -28,7 +33,7 @@ class ProductPropertyValues extends Component
 
     public function createValue()
     {
-        $this->validate();
+        $this->validateOnly('newValue');
 
         ProductPropertyValue::create([
             'property_name_id' => $this->productPropertyName->id,
@@ -40,8 +45,15 @@ class ProductPropertyValues extends Component
 
     public function updateValue($index)
     {
+        $valueToUpdate = $this->currentValuesAsString[$index];
+
+        Validator::make(
+            ['valueToUpdate' => $valueToUpdate],
+            ['valueToUpdate' => ['required', 'max:50', new ProductPropertyValueUnique($this->productPropertyName->id)]]
+        )->validate();
+
         ProductPropertyValue::find($this->currentValues[$index]['id'])->update([
-            'value' => $this->currentValuesAsString[$index]
+            'value' => $valueToUpdate
         ]);
     }
 
