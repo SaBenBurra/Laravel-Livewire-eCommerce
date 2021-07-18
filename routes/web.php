@@ -26,6 +26,7 @@ Route::group(['prefix' => 'panel', 'as' => 'panel.'], function () {
         'category' => \App\Http\Controllers\Admin\CategoryController::class,
         'brand' => \App\Http\Controllers\Admin\BrandController::class,
         'product' => \App\Http\Controllers\Admin\ProductController::class,
+        'product.product_property' => \App\Http\Controllers\Admin\ProductPropertyController::class,
     ], ['except' => ['show', 'destroy']]);
 
     Route::resource('productPropertyName', \App\Http\Controllers\Admin\ProductPropertyNameController::class);
