@@ -9,6 +9,7 @@
         <tr>
             <th scope="col">ID</th>
             <th scope="col">Name</th>
+            <th scope="col">Details</th>
             <th scope="col">Edit</th>
             <th scope="col">Remove</th>
         </tr>
@@ -18,6 +19,7 @@
             <tr>
                 <td>{{$productPropertyName->id}}</td>
                 <td>{{$productPropertyName->name}}</td>
+                <td><a href="{{route('panel.productPropertyName.show', $productPropertyName)}}"><button class="btn btn-success">View</button></a></td>
                 <td>
                     <a href="{{route('panel.productPropertyName.edit', $productPropertyName)}}">
                         <button class="btn btn-success">Edit</button>
