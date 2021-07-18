@@ -33,4 +33,9 @@ class Product extends Model
     {
         return $this->hasMany(ProductImage::class)->orderBy('place_number');
     }
+
+    public function properties()
+    {
+        return $this->hasMany(ProductProperty::class);
+    }
 }
