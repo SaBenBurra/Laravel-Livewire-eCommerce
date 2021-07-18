@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreCategoryRequest;
+use App\Http\Requests\UpdateCategoryRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
@@ -19,13 +21,10 @@ class CategoryController extends Controller
         return view('panel.pages.category-create-page');
     }
 
-    public function store(Request $request)
+    public function store(StoreCategoryRequest $request)
     {
-        $request->validate(['categoryName' => 'required|max:50|unique:categories,name']);
+        Category::create($request->validated());
 
-        Category::create([
-            'name' => $request->categoryName
-        ]);
         return redirect()->route('panel.category.index');
     }
 
@@ -34,13 +33,9 @@ class CategoryController extends Controller
         return view('panel.pages.category-edit-page', compact('category'));
     }
 
-    public function update(Request $request, Category $category)
+    public function update(UpdateCategoryRequest $request, Category $category)
     {
-        $request->validate(['categoryName' => 'required|max:50|unique:categories,name,' . $category->id]);
-
-        $category->update([
-            'name' => $request->categoryName
-        ]);
+        $category->update($request->validated());
 
         return redirect()->route('panel.category.index');
     }

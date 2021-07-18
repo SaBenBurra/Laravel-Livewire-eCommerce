@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreBrandRequest;
+use App\Http\Requests\UpdateBrandRequest;
 use App\Models\Brand;
 use Illuminate\Http\Request;
 
@@ -19,13 +21,9 @@ class BrandController extends Controller
         return view('panel.pages.brand-create-page');
     }
 
-    public function store(Request $request)
+    public function store(StoreBrandRequest $request)
     {
-        $request->validate(['brandName' => 'required|max:50|unique:brands,name']);
-
-        Brand::create([
-            'name' => $request->brandName
-        ]);
+        Brand::create($request->validated());
 
         return redirect()->route('panel.brand.index');
     }
@@ -35,13 +33,9 @@ class BrandController extends Controller
         return view('panel.pages.brand-edit-page', compact('brand'));
     }
 
-    public function update(Request $request, Brand $brand)
+    public function update(UpdateBrandRequest $request, Brand $brand)
     {
-        $request->validate(['brandName' => 'required|max:50|unique:brands,name,' . $brand->id]);
-
-        $brand->update([
-            'name' => $request->brandName
-        ]);
+        $brand->update($request->validated());
 
         return redirect()->route('panel.brand.index');
     }

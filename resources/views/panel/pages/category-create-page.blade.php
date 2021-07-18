@@ -5,8 +5,8 @@
         @csrf
         <div class="form-group">
             <label for="categoryName">Category Name:</label>
-            <input class="form-control" type="text" name="categoryName" id="categoryName"/>
-            @error('categoryName')
+            <input class="form-control" type="text" name="name" id="categoryName"/>
+            @error('name')
                 {{$message}}
             @enderror
         </div>

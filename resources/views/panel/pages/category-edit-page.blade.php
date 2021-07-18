@@ -1,13 +1,12 @@
 @extends('panel.pages.layout', ['title' => 'Category Edit Page'])
 @section('content')
-
-    <form method="POST" action="{{route('panel.category.update', ['category' => $category])}}">
+    <form method="POST" action="{{route('panel.category.update', [$category])}}">
         @csrf
         @method('PUT')
         <div class="form-group">
             <label for="categoryName">Category Name:</label>
-            <input class="form-control" value="{{$category->name}}" type="text" name="categoryName" id="categoryName"/>
-            @error('categoryName')
+            <input class="form-control" value="{{$category->name}}" type="text" name="name" id="categoryName"/>
+            @error('name')
             {{$message}}
             @enderror
         </div>
