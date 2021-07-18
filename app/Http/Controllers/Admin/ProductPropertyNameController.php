@@ -30,7 +30,7 @@ class ProductPropertyNameController extends Controller
 
     public function show(ProductPropertyName $productPropertyName)
     {
-        return view('panel.pages.product-property-values');
+        return view('panel.pages.product-property-values', compact('productPropertyName'));
     }
 
     public function edit(ProductPropertyName $productPropertyName)
