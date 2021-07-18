@@ -40,8 +40,8 @@
             <span>Products</span></a>
     </li>
 
-    <li class="nav-item @if(getCurrentRouteName() == 'panel.productProperty.index') active @endif">
-        <a class="nav-link" href="{{route('panel.productProperty.index')}}">
+    <li class="nav-item @if(getCurrentRouteName() == 'panel.productPropertyName.index') active @endif">
+        <a class="nav-link" href="{{route('panel.productPropertyName.index')}}">
             <i class="fas fa-sticky-note"></i>
             <span>Product Properties</span></a>
     </li>
