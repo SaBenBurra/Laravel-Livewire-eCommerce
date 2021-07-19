@@ -1,7 +1,14 @@
 @extends('panel.pages.layout', ['title' => 'Category Edit Page'])
 @section('content')
-    <a href="{{route('panel.productImages', [$product])}}"><button class="btn btn-success">Images</button></a>
-    <a href="{{route('panel.product.product_property.index', [$product])}}"><button class="btn btn-success">Properties</button></a>
+    <a href="{{route('panel.productImages', [$product])}}">
+        <button class="btn btn-success">Images</button>
+    </a>
+    <a href="{{route('panel.product.product_property.index', [$product])}}">
+        <button class="btn btn-success">Properties</button>
+    </a>
+    <a href="{{route('panel.productVariants', [$product])}}">
+        <button class="btn btn-success">Variants</button>
+    </a>
     <form method="POST" action="{{route('panel.product.update', ['product' => $product])}}">
         @csrf
         @method('PUT')
@@ -76,7 +83,8 @@
 
         <div class="form-group">
             <label for="price">Price:</label>
-            <input type="number" class="form-control" min="0" value="{{ $product->price }}" step="0.05" id="price" name="price"/>
+            <input type="number" class="form-control" min="0" value="{{ $product->price }}" step="0.05" id="price"
+                   name="price"/>
             @error('price')
             <div class="alert alert-danger" role="alert">
                 {{$message}}
@@ -86,7 +94,8 @@
 
         <div class="form-group">
             <label for="stock">Stock:</label>
-            <input type="number" class="form-control" min="0" value="{{ $product->stock }}" step="1" id="stock" name="stock"/>
+            <input type="number" class="form-control" min="0" value="{{ $product->stock }}" step="1" id="stock"
+                   name="stock"/>
             @error('stock')
             <div class="alert alert-danger" role="alert">
                 {{$message}}

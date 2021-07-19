@@ -8,15 +8,23 @@ use Illuminate\Http\Request;
 
 class PageController extends Controller
 {
-    public function dashboard() {
+    public function dashboard()
+    {
         return view('panel.pages.dashboard');
     }
 
-    public function users() {
+    public function users()
+    {
         return view('panel.pages.users');
     }
 
-    public function productImages(Product $product) {
+    public function productImages(Product $product)
+    {
         return view('panel.pages.product-images', compact('product'));
+    }
+
+    public function productVariants(Product $product)
+    {
+        return view('panel.pages.product-variants', compact('product'));
     }
 }

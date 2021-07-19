@@ -32,4 +32,5 @@ Route::group(['prefix' => 'panel', 'as' => 'panel.'], function () {
     Route::resource('productPropertyName', \App\Http\Controllers\Admin\ProductPropertyNameController::class);
 
     Route::get('/{product}/product-images', [\App\Http\Controllers\Admin\PageController::class, 'productImages'])->name('productImages');
+    Route::get('/{product}/product-variants', [\App\Http\Controllers\Admin\PageController::class, 'productVariants'])->name('productVariants');
 });
