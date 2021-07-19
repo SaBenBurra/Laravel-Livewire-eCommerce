@@ -24,7 +24,6 @@ class ProductPropertyValueUnique implements Rule
      */
     public function passes($attribute, $value)
     {
-        file_put_contents('sa.txt', $value);
         return DB::table('product_property_values')
             ->where('property_name_id', $this->productPropertyNameId)
             ->where('value', $value)
