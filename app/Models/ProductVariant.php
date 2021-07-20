@@ -10,4 +10,9 @@ class ProductVariant extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function value()
+    {
+        return $this->hasOne(ProductPropertyValue::class, 'id', 'property_value_id');
+    }
 }
