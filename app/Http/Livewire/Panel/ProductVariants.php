@@ -12,6 +12,7 @@ class ProductVariants extends Component
 {
     public $product;
     public $propertyNames = [];
+    private $productVariantGroups = [];
 
     public $idOfNewVariantGroupsPropertyName;
     public $newVariantGroupsPropertyName;
@@ -54,12 +55,18 @@ class ProductVariants extends Component
 
     public function mount()
     {
+        $this->getProductVariantGroups();
         $this->propertyNames = ProductPropertyName::all();
+    }
+
+    public function hydrate()
+    {
+        $this->getProductVariantGroups();
     }
 
     public function render()
     {
-        return view('livewire.panel.product-variants');
+        return view('livewire.panel.product-variants', ['productVariantGroups' => $this->productVariantGroups]);
     }
 
     public function updatedIdOfNewVariantGroupsPropertyName()
@@ -106,7 +113,7 @@ class ProductVariants extends Component
     {
         $this->validateOnly('variantsOfNewVariantGroup');
         DB::transaction(function () {
-            foreach($this->variantsOfNewVariantGroup as $variant) {
+            foreach ($this->variantsOfNewVariantGroup as $variant) {
                 ProductVariant::create([
                     'product_id' => $variant['product_id'],
                     'property_name_id' => $variant['property_name_id'],
@@ -116,5 +123,15 @@ class ProductVariants extends Component
                 ]);
             }
         });
+        $this->getProductVariantGroups();
+        $this->reset('variantsOfNewVariantGroup', 'idOfNewVariantGroupsPropertyName', 'newVariantGroupsPropertyName');
+    }
+
+    public function getProductVariantGroups()
+    {
+        $this->productVariantGroups = ProductVariant::with('value', 'name')->where('product_id', $this->product->id)
+            ->get()
+            ->groupBy('property_name_id')
+            ->toBase();
     }
 }

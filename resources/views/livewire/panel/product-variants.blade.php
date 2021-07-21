@@ -6,7 +6,7 @@
         <div class="form-group">
             <label for="newVariantName">Variant Group Name:</label>
             <select wire:model="idOfNewVariantGroupsPropertyName" class="form-control">
-                <option selected hidden>Please select a property name</option>
+                <option selected hidden>Please select a property name to create a variant group</option>
                 @forelse($propertyNames as $propertyName)
                     <option value="{{$propertyName->id}}">{{$propertyName->name}}</option>
                 @empty
@@ -105,8 +105,30 @@
             @enderror
         @endif
 
-        <b>
-            <hr style="border:1px solid black;"/>
-        </b>
+        <hr style="border:2px solid black;"/>
+        @foreach($productVariantGroups as $variantGroup)
 
+            <h3 class="h3">{{$variantGroup[0]->name->name}}</h3>
+
+            @foreach($variantGroup as $variant)
+                <div class="row mb-3">
+                    <div class="col">
+                        <label>Variant Value</label>
+                        <select class="form-control" disabled>
+                            <option selected>{{$variant->value->value}}</option>
+                        </select>
+                    </div>
+                    <div class="col">
+                        <label>Variant Price</label>
+                        <input type="number" value="{{$variant->price}}" class="form-control" min="0" step="0.05"/>
+                    </div>
+                    <div class="col">
+                        <label>Variant Stock</label>
+                        <input type="number" value="{{$variant->stock}}" class="form-control" min="0" step="1"/>
+                    </div>
+                </div>
+            @endforeach
+
+            <hr style="border:1px solid black;"/>
+    @endforeach
 </div>
