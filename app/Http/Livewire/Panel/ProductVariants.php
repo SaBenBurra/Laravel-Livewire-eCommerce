@@ -134,4 +134,12 @@ class ProductVariants extends Component
             ->groupBy('property_name_id')
             ->toBase();
     }
+
+    public function removeVariantGroup($propertyNameIdOfVariantGroupId)
+    {
+        ProductVariant::where('product_id', $this->product->id)
+            ->where('property_name_id', $propertyNameIdOfVariantGroupId)
+            ->delete();
+        $this->getProductVariantGroups();
+    }
 }

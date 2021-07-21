@@ -109,7 +109,7 @@
         @foreach($productVariantGroups as $variantGroup)
 
             <h3 class="h3">{{$variantGroup[0]->name->name}}</h3>
-
+            <div class="text-right"><button wire:click="removeVariantGroup({{$variantGroup[0]->name->id}})" type="button" class="btn btn-danger">Remove</button></div>
             @foreach($variantGroup as $variant)
                 <div class="row mb-3">
                     <div class="col">
