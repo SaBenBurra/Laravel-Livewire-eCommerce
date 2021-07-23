@@ -12,7 +12,7 @@ class ProductVariants extends Component
 {
     public $product;
     public $propertyNames = [];
-    private $productVariantGroups = [];
+    public $productVariantGroups = [];
 
     public $idOfNewVariantGroupsPropertyName;
     public $newVariantGroupsPropertyName;
@@ -26,6 +26,7 @@ class ProductVariants extends Component
 
     public $propertyValueOfNewVariant;
 
+    public $variantsToCreateOfVariantGroupsToUpdate = [];
 
     protected $listeners = ['resetPropertyName' => 'resetPropertyName'];
 
@@ -56,12 +57,13 @@ class ProductVariants extends Component
     public function mount()
     {
         $this->getProductVariantGroups();
+        $this->fillVariantsToCreateOfVariantGroupsToUpdate();
         $this->propertyNames = ProductPropertyName::all();
     }
 
-    public function hydrate()
+    public function dehydrate()
     {
-        $this->getProductVariantGroups();
+
     }
 
     public function render()
@@ -125,6 +127,7 @@ class ProductVariants extends Component
         });
         $this->getProductVariantGroups();
         $this->reset('variantsOfNewVariantGroup', 'idOfNewVariantGroupsPropertyName', 'newVariantGroupsPropertyName');
+        $this->fillVariantsToCreateOfVariantGroupsToUpdate();
     }
 
     public function getProductVariantGroups()
@@ -132,7 +135,7 @@ class ProductVariants extends Component
         $this->productVariantGroups = ProductVariant::with('value', 'name')->where('product_id', $this->product->id)
             ->get()
             ->groupBy('property_name_id')
-            ->toBase();
+            ->toArray();
     }
 
     public function removeVariantGroup($propertyNameIdOfVariantGroupId)
@@ -141,5 +144,50 @@ class ProductVariants extends Component
             ->where('property_name_id', $propertyNameIdOfVariantGroupId)
             ->delete();
         $this->getProductVariantGroups();
+    }
+
+    public function fillVariantsToCreateOfVariantGroupsToUpdate()
+    {
+        foreach ($this->productVariantGroups as $index => $variantGroup) {
+            $this->variantsToCreateOfVariantGroupsToUpdate[$index]['property_value_id'] = 0;
+            $this->variantsToCreateOfVariantGroupsToUpdate[$index]['price'] = 0;
+            $this->variantsToCreateOfVariantGroupsToUpdate[$index]['stock'] = 0;
+        }
+    }
+
+    public function getPropertyValuesOfCurrentVariantGroup($variantGroupDataArray)
+    {
+        return ProductPropertyValue::where('property_name_id', $variantGroupDataArray[0]['property_name_id'])->get();
+    }
+
+    public function createVariantToCurrentVariantGroup($propertyNameId, $propertyValueId, $price, $stock)
+    {
+        $this->dispatchBrowserEvent('log', ['text' => $propertyValueId]);
+        ProductVariant::create([
+            'product_id' => $this->product->id,
+            'property_name_id' => $propertyNameId,
+            'property_value_id' => $propertyValueId,
+            'price' => $price,
+            'stock' => $stock
+        ]);
+        $this->fillVariantsToCreateOfVariantGroupsToUpdate();
+        $this->getProductVariantGroups();
+    }
+
+    public function saveVariantChanges($propertyValueId, $price, $stock) {
+        $variant = ProductVariant::where('property_value_id', $propertyValueId)
+            ->where('product_id', $this->product->id)
+            ->first();
+        $variant->price = $price;
+        $variant->stock = $stock;
+        $variant->save();
+        $this->getProductVariantGroups();
+    }
+
+    public function removeVariant($idOfVariantToRemove, $variantCountOfVariantGroup) {
+        if($variantCountOfVariantGroup > 2) {
+            ProductVariant::destroy($idOfVariantToRemove);
+            $this->getProductVariantGroups();
+        }
     }
 }
