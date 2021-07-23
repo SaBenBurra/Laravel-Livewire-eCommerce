@@ -14,7 +14,7 @@ class AddIsPriceUsingToProductVariants extends Migration
     public function up()
     {
         Schema::table('product_variants', function (Blueprint $table) {
-            $table->boolean('is_price_using')->after('stock');
+            $table->boolean('is_price_using')->default(0)->after('stock');
         });
     }
 
