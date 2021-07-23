@@ -114,7 +114,7 @@
                                 class="btn btn-dark" style="cursor:default">Prices Using
                         </button>
                     @else
-                        <button wire:click="usePriceOfSelectedVariant({{$variantGroup[0]['property_name_id']}})"
+                        <button wire:click="setVariantPriceForProductPrice({{$variantGroup[0]['property_name_id']}})"
                                 wire:key="usePrice_{{$variantGroup[0]['property_name_id']}}"
                                 class="btn btn-info">Use This Variant's Price
                         </button>
