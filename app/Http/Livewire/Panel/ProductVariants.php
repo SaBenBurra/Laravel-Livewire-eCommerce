@@ -61,9 +61,9 @@ class ProductVariants extends Component
         $this->propertyNames = ProductPropertyName::all();
     }
 
-    public function dehydrate()
+    public function hydrate()
     {
-
+        $this->getProductVariantGroups();
     }
 
     public function render()
@@ -174,7 +174,8 @@ class ProductVariants extends Component
         $this->getProductVariantGroups();
     }
 
-    public function saveVariantChanges($propertyValueId, $price, $stock) {
+    public function saveVariantChanges($propertyValueId, $price, $stock)
+    {
         $variant = ProductVariant::where('property_value_id', $propertyValueId)
             ->where('product_id', $this->product->id)
             ->first();
@@ -184,10 +185,27 @@ class ProductVariants extends Component
         $this->getProductVariantGroups();
     }
 
-    public function removeVariant($idOfVariantToRemove, $variantCountOfVariantGroup) {
-        if($variantCountOfVariantGroup > 2) {
+    public function removeVariant($idOfVariantToRemove, $variantCountOfVariantGroup)
+    {
+        if ($variantCountOfVariantGroup > 2) {
             ProductVariant::destroy($idOfVariantToRemove);
             $this->getProductVariantGroups();
         }
+    }
+
+    public function setVariantPriceForProductPrice($propertyNameId)
+    {
+        $this->dispatchBrowserEvent('alert', ['text' => 'Success!']);
+        DB::transaction(function () use ($propertyNameId) {
+            ProductVariant::where('property_name_id', $propertyNameId)
+                ->where('product_id', $this->product->id)
+                ->update(['is_price_using' => 1]);
+
+            ProductVariant::where('property_name_id', '!=', $propertyNameId)
+                ->where('product_id', $this->product->id)
+                ->update(['is_price_using' => 0]);
+
+            $this->getProductVariantGroups();
+        });
     }
 }

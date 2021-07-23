@@ -105,71 +105,84 @@
 
     <hr style="border:2px solid black;"/>
     @foreach($productVariantGroups as $variantGroupIndex => $variantGroup)
-
-        <div class="mt-3" style="display:flex;justify-content: space-between"><h3
-                    class="h3">{{$variantGroup[0]['name']['name']}}</h3>
-            <button wire:click="removeVariantGroup({{$variantGroup[0]['name']['id']}})" type="button"
-                    class="btn btn-danger">Remove
-            </button>
-        </div>
-        <div class="row">
-            <div class="col">Variant Value</div>
-            <div class="col">Variant Price</div>
-            <div class="col">Variant Stock</div>
-            <div class="col"></div>
-        </div>
-        @foreach($variantGroup as $variantIndex => $variant)
-            <div class="row mb-3" wire:key="variant_{{$variant['id']}}">
-                <div class="col">
-                    <select wire:model="productVariantGroups.{{$variantGroupIndex}}.{{$variantIndex}}.property_value_id"
-                            class="form-control">
-                        <option selected>{{$variant['value']['value']}}</option>
-                    </select>
-                </div>
-                <div class="col">
-                    <input wire:model="productVariantGroups.{{$variantGroupIndex}}.{{$variantIndex}}.price"
-                           type="number" class="form-control"
-                           min="0" step="0.05"/>
-                </div>
-                <div class="col">
-                    <input wire:model="productVariantGroups.{{$variantGroupIndex}}.{{$variantIndex}}.stock"
-                           type="number" class="form-control"
-                           min="0" step="1"/>
-                </div>
-                <div class="col">
-                    <button wire:click="saveVariantChanges({{$variant['property_value_id']}}, {{$variant['price']}}, {{$variant['stock']}})"
-                            class="btn btn-success">Save
-                    </button>
-                    <button wire:click="removeVariant({{$variant['id']}}, {{count($variantGroup)}})"
-                            class="btn btn-danger ml-4">Remove
+        <div wire:key="variantGroup_{{$variantGroupIndex}}">
+            <div class="mt-3" style="display:flex;justify-content: space-between"><h3
+                        class="h3">{{$variantGroup[0]['name']['name']}}</h3>
+                <div>
+                    @if($variantGroup[0]['is_price_using'] == 1)
+                        <button wire:key="usingPrice_{{$variantGroup[0]['property_name_id']}}"
+                                class="btn btn-dark" style="cursor:default">Prices Using
+                        </button>
+                    @else
+                        <button wire:click="usePriceOfSelectedVariant({{$variantGroup[0]['property_name_id']}})"
+                                wire:key="usePrice_{{$variantGroup[0]['property_name_id']}}"
+                                class="btn btn-info">Use This Variant's Price
+                        </button>
+                    @endif
+                    <button wire:click="removeVariantGroup({{$variantGroup[0]['name']['id']}})" type="button"
+                            class="btn btn-danger ml-3">Remove
                     </button>
                 </div>
             </div>
-        @endforeach
-        <form wire:submit.prevent="createVariantToCurrentVariantGroup({{$variantGroup[0]['property_name_id']}}, {{$variantsToCreateOfVariantGroupsToUpdate[$variantGroupIndex]['property_value_id']}}, {{$variantsToCreateOfVariantGroupsToUpdate[$variantGroupIndex]['price']}}, {{$variantsToCreateOfVariantGroupsToUpdate[$variantGroupIndex]['stock']}})">
-            <div class="row mb-3">
-                <div class="col">
-                    <select wire:model="variantsToCreateOfVariantGroupsToUpdate.{{$variantGroupIndex}}.property_value_id"
-                            class="form-control">
-                        <option selected hidden>Please select a property</option>
-                        @foreach($this->getPropertyValuesOfCurrentVariantGroup($variantGroup) as $value)
-                            <option value="{{$value->id}}">{{$value->value}}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="col">
-                    <input wire:model="variantsToCreateOfVariantGroupsToUpdate.{{$variantGroupIndex}}.price"
-                           type="number" class="form-control" min="0" step="0.05">
-                </div>
-                <div class="col">
-                    <input
-                            wire:model="variantsToCreateOfVariantGroupsToUpdate.{{$variantGroupIndex}}.stock"
-                            type="number" class="form-control" min="0" step="1"></div>
-                <div class="col">
-                    <button type="submit" class="btn btn-success"><i class="fa fa-plus"></i></button>
-                </div>
+            <div class="row">
+                <div class="col">Variant Value</div>
+                <div class="col">Variant Price</div>
+                <div class="col">Variant Stock</div>
+                <div class="col"></div>
             </div>
-        </form>
-        <hr style="border:1px solid black;"/>
+            @foreach($variantGroup as $variantIndex => $variant)
+                <div class="row mb-3" wire:key="variant_{{$variant['id']}}">
+                    <div class="col">
+                        <select wire:model="productVariantGroups.{{$variantGroupIndex}}.{{$variantIndex}}.property_value_id"
+                                class="form-control">
+                            <option selected>{{$variant['value']['value']}}</option>
+                        </select>
+                    </div>
+                    <div class="col">
+                        <input wire:model="productVariantGroups.{{$variantGroupIndex}}.{{$variantIndex}}.price"
+                               type="number" class="form-control"
+                               min="0" step="0.05"/>
+                    </div>
+                    <div class="col">
+                        <input wire:model="productVariantGroups.{{$variantGroupIndex}}.{{$variantIndex}}.stock"
+                               type="number" class="form-control"
+                               min="0" step="1"/>
+                    </div>
+                    <div class="col">
+                        <button wire:click="saveVariantChanges({{$variant['property_value_id']}}, {{$variant['price']}}, {{$variant['stock']}})"
+                                class="btn btn-success">Save
+                        </button>
+                        <button wire:click="removeVariant({{$variant['id']}}, {{count($variantGroup)}})"
+                                class="btn btn-danger ml-4">Remove
+                        </button>
+                    </div>
+                </div>
+            @endforeach
+            <form wire:submit.prevent="createVariantToCurrentVariantGroup({{$variantGroup[0]['property_name_id']}}, {{$variantsToCreateOfVariantGroupsToUpdate[$variantGroupIndex]['property_value_id']}}, {{$variantsToCreateOfVariantGroupsToUpdate[$variantGroupIndex]['price']}}, {{$variantsToCreateOfVariantGroupsToUpdate[$variantGroupIndex]['stock']}})">
+                <div class="row mb-3">
+                    <div class="col">
+                        <select wire:model="variantsToCreateOfVariantGroupsToUpdate.{{$variantGroupIndex}}.property_value_id"
+                                class="form-control">
+                            <option selected hidden>Please select a property</option>
+                            @foreach($this->getPropertyValuesOfCurrentVariantGroup($variantGroup) as $value)
+                                <option value="{{$value->id}}">{{$value->value}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col">
+                        <input wire:model="variantsToCreateOfVariantGroupsToUpdate.{{$variantGroupIndex}}.price"
+                               type="number" class="form-control" min="0" step="0.05">
+                    </div>
+                    <div class="col">
+                        <input
+                                wire:model="variantsToCreateOfVariantGroupsToUpdate.{{$variantGroupIndex}}.stock"
+                                type="number" class="form-control" min="0" step="1"></div>
+                    <div class="col">
+                        <button type="submit" class="btn btn-success"><i class="fa fa-plus"></i></button>
+                    </div>
+                </div>
+            </form>
+            <hr style="border:1px solid black;"/>
+        </div>
     @endforeach
 </div>
