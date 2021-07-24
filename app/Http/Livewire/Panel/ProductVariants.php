@@ -5,7 +5,9 @@ namespace App\Http\Livewire\Panel;
 use App\Models\ProductPropertyName;
 use App\Models\ProductPropertyValue;
 use App\Models\ProductVariant;
+use App\Rules\VariantGroupIsExists;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 use Livewire\Component;
 
 class ProductVariants extends Component
@@ -30,6 +32,9 @@ class ProductVariants extends Component
 
     protected $listeners = ['resetPropertyName' => 'resetPropertyName'];
 
+    private $priceRule = 'required|numeric|regex:/^\d+(\.\d{1,2})?$/|max:9999999|min:0.01';
+    private $stockRule = 'int|min:0|max:9999999';
+
     public function rules()
     {
         return [
@@ -50,7 +55,9 @@ class ProductVariants extends Component
                     }
                 }
             ],
-            'variantsOfNewVariantGroup' => ['min:2'],
+            'priceOfNewVariant' => $this->priceRule,
+            'stockOfNewVariant' => $this->stockRule,
+            'variantsOfNewVariantGroup' => ['min:2', new VariantGroupIsExists($this->productVariantGroups)],
         ];
     }
 
@@ -80,6 +87,8 @@ class ProductVariants extends Component
     public function addVariantToNewVariantGroup()
     {
         $this->validateOnly('propertyValueIdOfNewVariant');
+        $this->validateOnly('priceOfNewVariant');
+        $this->validateOnly('stockOfNewVariant');
         $newVariantDataArray = [
             'product_id' => $this->product->id,
             'property_name_id' => $this->idOfNewVariantGroupsPropertyName,
@@ -114,6 +123,7 @@ class ProductVariants extends Component
     public function createVariantGroup()
     {
         $this->validateOnly('variantsOfNewVariantGroup');
+        $this->validateOnly('productVariantGroups');
         DB::transaction(function () {
             foreach ($this->variantsOfNewVariantGroup as $variant) {
                 ProductVariant::create([
@@ -162,7 +172,38 @@ class ProductVariants extends Component
 
     public function createVariantToCurrentVariantGroup($propertyNameId, $propertyValueId, $price, $stock)
     {
-        $this->dispatchBrowserEvent('log', ['text' => $propertyValueId]);
+        Validator::make(
+            ['price' => $price],
+            ['price' => $this->priceRule]
+        )->validate();
+
+        Validator::make(
+            ['stock' => $stock],
+            ['stock' => $this->stockRule]
+        )->validate();
+
+        Validator::make(
+            ['propertyValueId' => $propertyValueId],
+            ['propertyValueId' =>
+                [
+                    function ($attribute, $value, $fail) use ($propertyNameId) {
+
+                        if (!ProductPropertyValue::where('id', $value)
+                            ->where('property_name_id', $propertyNameId)
+                            ->exists())
+                            $fail('This value is invalid');
+                    },
+                    function ($attribute, $value, $fail) use ($propertyNameId) {
+                        file_put_contents('sea.txt', "SSSSSSSSSSSSSSSSSSSS");
+                        foreach ($this->productVariantGroups[$propertyNameId] as $variant) {
+                            if ($variant['property_value_id'] == $value) {
+                                $fail('This value already used');
+                            }
+                        }
+                    }]
+            ]
+        )->validate();
+
         ProductVariant::create([
             'product_id' => $this->product->id,
             'property_name_id' => $propertyNameId,
@@ -176,6 +217,16 @@ class ProductVariants extends Component
 
     public function saveVariantChanges($propertyValueId, $price, $stock)
     {
+        Validator::make(
+            ['price' => $price],
+            ['price' => $this->priceRule]
+        )->validate();
+
+        Validator::make(
+            ['stock' => $stock],
+            ['stock' => $this->stockRule]
+        )->validate();
+
         $variant = ProductVariant::where('property_value_id', $propertyValueId)
             ->where('product_id', $this->product->id)
             ->first();
@@ -183,6 +234,8 @@ class ProductVariants extends Component
         $variant->stock = $stock;
         $variant->save();
         $this->getProductVariantGroups();
+
+        $this->dispatchBrowserEvent('alert', ['text' => 'Success!']);
     }
 
     public function removeVariant($idOfVariantToRemove, $variantCountOfVariantGroup)

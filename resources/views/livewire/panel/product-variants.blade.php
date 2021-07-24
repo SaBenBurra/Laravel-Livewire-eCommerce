@@ -98,12 +98,16 @@
         <div class="text-right">
             <button wire:click="createVariantGroup" type="button" class="btn btn-success mb-3">Create</button>
         </div>
-        @error('variantsOfNewVariantGroup')
-        {{$message}}
-        @enderror
+
+        @error('variantsOfNewVariantGroup') {{$message}} @enderror
+        @error('stockOfNewVariant') {{$message}} @enderror
+        @error('priceOfNewVariant') {{$message}} @enderror
     @endif
 
     <hr style="border:2px solid black;"/>
+    @error('price') {{$message}} @enderror
+    @error('stock') {{$message}} @enderror
+    @error('propertyValueId') {{$message}} @enderror
     @foreach($productVariantGroups as $variantGroupIndex => $variantGroup)
         <div wire:key="variantGroup_{{$variantGroupIndex}}">
             <div class="mt-3" style="display:flex;justify-content: space-between"><h3
@@ -134,7 +138,7 @@
                 <div class="row mb-3" wire:key="variant_{{$variant['id']}}">
                     <div class="col">
                         <select wire:model="productVariantGroups.{{$variantGroupIndex}}.{{$variantIndex}}.property_value_id"
-                                class="form-control">
+                                class="form-control" disabled>
                             <option selected>{{$variant['value']['value']}}</option>
                         </select>
                     </div>
@@ -156,6 +160,7 @@
                                 class="btn btn-danger ml-4">Remove
                         </button>
                     </div>
+
                 </div>
             @endforeach
             <form wire:submit.prevent="createVariantToCurrentVariantGroup({{$variantGroup[0]['property_name_id']}}, {{$variantsToCreateOfVariantGroupsToUpdate[$variantGroupIndex]['property_value_id']}}, {{$variantsToCreateOfVariantGroupsToUpdate[$variantGroupIndex]['price']}}, {{$variantsToCreateOfVariantGroupsToUpdate[$variantGroupIndex]['stock']}})">
