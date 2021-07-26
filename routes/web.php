@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('front.pages.main-page');
 });
 
 Route::group(['prefix' => 'panel', 'as' => 'panel.'], function () {
