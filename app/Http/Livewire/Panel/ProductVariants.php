@@ -194,7 +194,6 @@ class ProductVariants extends Component
                             $fail('This value is invalid');
                     },
                     function ($attribute, $value, $fail) use ($propertyNameId) {
-                        file_put_contents('sea.txt', "SSSSSSSSSSSSSSSSSSSS");
                         foreach ($this->productVariantGroups[$propertyNameId] as $variant) {
                             if ($variant['property_value_id'] == $value) {
                                 $fail('This value already used');

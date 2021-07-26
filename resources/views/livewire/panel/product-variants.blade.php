@@ -3,8 +3,9 @@
         addEventListener("alert", (e) => alert(e.detail.text));
         addEventListener("log", (e) => console.log(e.detail.text));
     </script>
+    <h2 class="h2">Create New Variant Group</h2>
     <div class="form-group">
-        <label for="newVariantName">Variant Group Name:</label>
+        <label for="newVariantName">Select Variant Group Name To Create:</label>
         <select wire:model="idOfNewVariantGroupsPropertyName" class="form-control">
             <option selected hidden>Please select a property name to create a variant group</option>
             @forelse($propertyNames as $propertyName)
@@ -108,7 +109,10 @@
     @error('price') {{$message}} @enderror
     @error('stock') {{$message}} @enderror
     @error('propertyValueId') {{$message}} @enderror
-    @foreach($productVariantGroups as $variantGroupIndex => $variantGroup)
+    @forelse($productVariantGroups as $variantGroupIndex => $variantGroup)
+        @if($loop->first)
+            <h2 class="h2">Variants</h2>
+            @endif
         <div wire:key="variantGroup_{{$variantGroupIndex}}">
             <div class="mt-3" style="display:flex;justify-content: space-between"><h3
                         class="h3">{{$variantGroup[0]['name']['name']}}</h3>
@@ -189,5 +193,7 @@
             </form>
             <hr style="border:1px solid black;"/>
         </div>
-    @endforeach
+        @empty
+        <h4 class="h4 mt-3">There are no variants for this product...</h4>
+    @endforelse
 </div>
