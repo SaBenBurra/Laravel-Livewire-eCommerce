@@ -1,4 +1,4 @@
-@extends('front.pages.layout', ['title' => 'Login'])
+@extends('front.pages.layout', ['title' => 'Register'])
 @section('content')
 <section class="section-content padding-y">
 
