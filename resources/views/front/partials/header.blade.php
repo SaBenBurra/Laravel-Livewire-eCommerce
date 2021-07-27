@@ -21,18 +21,31 @@
                 </div> <!-- col.// -->
                 <div class="col-lg-4 col-sm-6 col-8 order-2 order-lg-3">
                     <div class="float-md-right">
+                        @auth
                         <div class="widget-header  mr-3">
                             <a href="#" class="icon icon-sm rounded-circle border"><i class="fa fa-shopping-cart"></i></a>
                             <span class="badge badge-pill badge-danger notify">0</span>
                         </div>
+                        @endauth
                         <div class="widget-header icontext">
+                            @auth
                             <a href="#" class="icon icon-sm rounded-circle border"><i class="fa fa-user"></i></a>
+                            @endauth
                             <div class="text">
                                 <span class="text-muted">Welcome!</span>
+                                @auth
+                                    {{auth()->user()->name}}
+                                    <form style="display:inline" action="{{route('logout')}}" method="POST">
+                                        @csrf
+                                        <input type="submit" value="Logout" />
+                                    </form>
+                                @endauth
+                                @guest
                                 <div>
-                                    <a href="#">Sign in</a> |
-                                    <a href="#"> Register</a>
+                                    <a href="{{route('login')}}">Sign in</a> |
+                                    <a href="{{route('register')}}"> Register</a>
                                 </div>
+                                @endguest
                             </div>
                         </div>
 
