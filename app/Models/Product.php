@@ -21,12 +21,10 @@ class Product extends Model
         return $this->hasOne(Brand::class);
     }
 
-    public function generateSerialNumber()
+    public function setSerialNumber()
     {
-        $chars = '1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        $serialNumber = substr(str_shuffle($chars), 0, 8);
 
-        $this->serial_number = $serialNumber;
+        $this->serial_number = generateSerialNumber();
     }
 
     public function images()

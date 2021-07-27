@@ -38,7 +38,7 @@ class ProductController extends Controller
 
         $newProduct = new Product;
         $newProduct->fill($request->all());
-        $newProduct->generateSerialNumber();
+        $newProduct->setSerialNumber();
         $newProduct->save();
 
         return redirect()->route('panel.product.index');
