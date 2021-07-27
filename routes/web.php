@@ -13,8 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('front.pages.main-page');
+Route::group(['as' => 'front.'], function () {
+    Route::get('/', function () {
+        return view('front.pages.main-page');
+    })->name('main');
 });
 
 Route::group(['prefix' => 'panel', 'as' => 'panel.'], function () {

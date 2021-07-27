@@ -66,10 +66,10 @@ class FortifyServiceProvider extends ServiceProvider
         $this->app->instance(LoginResponse::class, new class implements LoginResponse {
             public function toResponse($request)
             {
-                if(auth()->user()->is_admin == 1)
+                if(auth()->user()->is_admin)
                     return redirect()->route('panel.dashboard');
                 else
-                    return redirect('/');
+                    return redirect()->route('front.main');
             }
         });
     }
