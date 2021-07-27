@@ -19,7 +19,7 @@ Route::group(['as' => 'front.'], function () {
     })->name('main');
 });
 
-Route::group(['prefix' => 'panel', 'as' => 'panel.'], function () {
+Route::group(['prefix' => 'panel', 'as' => 'panel.', 'middleware' => ['admin_check']], function () {
     Route::get('dashboard', [\App\Http\Controllers\Admin\PageController::class, 'dashboard'])->name('dashboard');
     Route::get('users', [\App\Http\Controllers\Admin\PageController::class, 'users'])->name('users');
 
