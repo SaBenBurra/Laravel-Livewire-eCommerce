@@ -12,4 +12,8 @@ class PageController extends Controller
         $lastProducts = Product::limit(8)->orderBy('id', 'desc')->get();
         return view('front.pages.main-page', compact('lastProducts'));
     }
+
+    public function productDetail(Product $product) {
+        return view('front.pages.product-detail', compact('product'));
+    }
 }
