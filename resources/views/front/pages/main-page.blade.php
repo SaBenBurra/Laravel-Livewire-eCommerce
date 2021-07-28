@@ -46,7 +46,7 @@
                     <div href="#" class="card card-product-grid">
                         <a href="#" class="img-wrap"> <img src="{{$product->coverImagePath()}}"> </a>
                         <figcaption class="info-wrap">
-                            <a href="#" class="title">{{$product->name}}</a>
+                            <a href="{{route('front.productDetail', [$product->slug])}}" class="title">{{$product->name}}</a>
                             <div class="price mt-1">${{$product->price}}</div> <!-- price-wrap.// -->
                         </figcaption>
                     </div>
