@@ -14,9 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['as' => 'front.'], function () {
-    Route::get('/', function () {
-        return view('front.pages.main-page');
-    })->name('main');
+    Route::get('/', [\App\Http\Controllers\Front\PageController::class, 'main'])->name('main');
 });
 
 Route::group(['prefix' => 'panel', 'as' => 'panel.', 'middleware' => ['admin_check']], function () {

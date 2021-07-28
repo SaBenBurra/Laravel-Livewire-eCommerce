@@ -41,78 +41,19 @@
 
 
             <div class="row">
+                @forelse($lastProducts as $product)
                 <div class="col-md-3">
                     <div href="#" class="card card-product-grid">
-                        <a href="#" class="img-wrap"> <img src="images/items/1.jpg"> </a>
+                        <a href="#" class="img-wrap"> <img src="{{$product->coverImagePath()}}"> </a>
                         <figcaption class="info-wrap">
-                            <a href="#" class="title">Just another product name</a>
-                            <div class="price mt-1">$179.00</div> <!-- price-wrap.// -->
+                            <a href="#" class="title">{{$product->name}}</a>
+                            <div class="price mt-1">${{$product->price}}</div> <!-- price-wrap.// -->
                         </figcaption>
                     </div>
                 </div> <!-- col.// -->
-                <div class="col-md-3">
-                    <div href="#" class="card card-product-grid">
-                        <a href="#" class="img-wrap"> <img src="images/items/2.jpg"> </a>
-                        <figcaption class="info-wrap">
-                            <a href="#" class="title">Some item name here</a>
-                            <div class="price mt-1">$280.00</div> <!-- price-wrap.// -->
-                        </figcaption>
-                    </div>
-                </div> <!-- col.// -->
-                <div class="col-md-3">
-                    <div href="#" class="card card-product-grid">
-                        <a href="#" class="img-wrap"> <img src="images/items/3.jpg"> </a>
-                        <figcaption class="info-wrap">
-                            <a href="#" class="title">Great product name here</a>
-                            <div class="price mt-1">$56.00</div> <!-- price-wrap.// -->
-                        </figcaption>
-                    </div>
-                </div> <!-- col.// -->
-                <div class="col-md-3">
-                    <div href="#" class="card card-product-grid">
-                        <a href="#" class="img-wrap"> <img src="images/items/4.jpg"> </a>
-                        <figcaption class="info-wrap">
-                            <a href="#" class="title">Just another product name</a>
-                            <div class="price mt-1">$179.00</div> <!-- price-wrap.// -->
-                        </figcaption>
-                    </div>
-                </div> <!-- col.// -->
-                <div class="col-md-3">
-                    <div href="#" class="card card-product-grid">
-                        <a href="#" class="img-wrap"> <img src="images/items/1.jpg"> </a>
-                        <figcaption class="info-wrap">
-                            <a href="#" class="title">Just another product name</a>
-                            <div class="price mt-1">$179.00</div> <!-- price-wrap.// -->
-                        </figcaption>
-                    </div>
-                </div> <!-- col.// -->
-                <div class="col-md-3">
-                    <div href="#" class="card card-product-grid">
-                        <a href="#" class="img-wrap"> <img src="images/items/2.jpg"> </a>
-                        <figcaption class="info-wrap">
-                            <a href="#" class="title">Some item name here</a>
-                            <div class="price mt-1">$280.00</div> <!-- price-wrap.// -->
-                        </figcaption>
-                    </div>
-                </div> <!-- col.// -->
-                <div class="col-md-3">
-                    <div href="#" class="card card-product-grid">
-                        <a href="#" class="img-wrap"> <img src="images/items/3.jpg"> </a>
-                        <figcaption class="info-wrap">
-                            <a href="#" class="title">Great product name here</a>
-                            <div class="price mt-1">$56.00</div> <!-- price-wrap.// -->
-                        </figcaption>
-                    </div>
-                </div> <!-- col.// -->
-                <div class="col-md-3">
-                    <div href="#" class="card card-product-grid">
-                        <a href="#" class="img-wrap"> <img src="images/items/4.jpg"> </a>
-                        <figcaption class="info-wrap">
-                            <a href="#" class="title">Just another product name</a>
-                            <div class="price mt-1">$179.00</div> <!-- price-wrap.// -->
-                        </figcaption>
-                    </div>
-                </div> <!-- col.// -->
+                    @empty
+                    There is no products
+                @endforelse
             </div> <!-- row.// -->
 
         </div><!-- container // -->
