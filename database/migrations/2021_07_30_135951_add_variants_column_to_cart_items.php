@@ -14,7 +14,8 @@ class AddVariantsColumnToCartItems extends Migration
     public function up()
     {
         Schema::table('cart_items', function (Blueprint $table) {
-            $table->json('variants')->after('user_id')->nullable();
+            $table->string('variants', 500)->nullable();
+            $table->unique(['product_id', 'user_id', 'variants']);
         });
     }
 
