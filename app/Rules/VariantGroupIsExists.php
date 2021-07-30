@@ -27,7 +27,6 @@ class VariantGroupIsExists implements Rule
      */
     public function passes($attribute, $variantsOfNewVariantGroup)
     {
-        file_put_contents('sa.txt', print_r($variantsOfNewVariantGroup, true));
         return !in_array(reset($variantsOfNewVariantGroup)['property_name_id'], array_keys($this->productVariantGroups));
     }
 
