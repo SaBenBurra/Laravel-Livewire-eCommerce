@@ -7,6 +7,7 @@ use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
 use App\Rules\ProductSlugUnique;
+use App\Rules\VariantsHavePrice;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -58,8 +59,8 @@ class ProductController extends Controller
             'name' => 'required|min:3|max:450',
             'category_id' => 'required|exists:categories,id',
             'brand_id' => 'required|exists:brands,id',
-            'price' => 'required|numeric|regex:/^\d+(\.\d{1,2})?$/|max:9999999|min:0.01',
-            'slug' => ['required', 'string', 'min:10', 'max:500', new ProductSlugUnique($request->id)],
+            'price' => ['required', 'numeric', 'regex:/^\d+(\.\d{1,2})?$/', 'max:9999999', 'min:0.01', new VariantsHavePrice($product)],
+            'slug' => ['required', 'string', 'min:10', 'max:500', new ProductSlugUnique($product->id)],
             'stock' => 'int|min:0|max:9999999',
             'description' => 'string|min:10|max:1400',
         ]);

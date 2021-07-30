@@ -253,6 +253,12 @@ class ProductVariants extends Component
                 ->where('product_id', $this->product->id)
                 ->update(['is_price_using' => 1]);
 
+            $minPrice = ProductVariant::where('property_name_id', $propertyNameId)
+                ->where('product_id', $this->product->id)
+                ->min('price');
+            $this->product->price = $minPrice;
+            $this->product->save();
+
             ProductVariant::where('property_name_id', '!=', $propertyNameId)
                 ->where('product_id', $this->product->id)
                 ->update(['is_price_using' => 0]);
