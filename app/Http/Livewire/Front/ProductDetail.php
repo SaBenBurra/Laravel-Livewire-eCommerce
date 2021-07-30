@@ -55,7 +55,8 @@ class ProductDetail extends Component
 
     public function decreaseQuantity()
     {
-        $this->quantity -= 1;
+        if ($this->quantity > 1)
+            $this->quantity -= 1;
     }
 
     public function addToCart()

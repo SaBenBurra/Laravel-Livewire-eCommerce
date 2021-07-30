@@ -53,7 +53,7 @@
                                             id="button-plus">+
                                     </button>
                                 </div>
-                                <input wire:model="quantity" type="text" class="form-control" value="1">
+                                <input type="text" class="form-control" value="{{$quantity}}">
                                 <div class="input-group-append">
                                     <button class="btn btn-light" wire:click="decreaseQuantity" type="button"
                                             id="button-minus">&minus;
