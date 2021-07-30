@@ -81,5 +81,6 @@ class ProductDetail extends Component
                 'quantity' => DB::raw('quantity + ' . $this->quantity),
             ]
         );
+        $this->emit('updateCart');
     }
 }

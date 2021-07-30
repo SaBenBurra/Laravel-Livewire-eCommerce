@@ -23,8 +23,7 @@
                     <div class="float-md-right">
                         @auth
                         <div class="widget-header  mr-3">
-                            <a href="#" class="icon icon-sm rounded-circle border"><i class="fa fa-shopping-cart"></i></a>
-                            <span class="badge badge-pill badge-danger notify">0</span>
+                            @livewire('front.cart-icon')
                         </div>
                         @endauth
                         <div class="widget-header icontext">
