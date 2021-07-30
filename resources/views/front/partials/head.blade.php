@@ -27,6 +27,7 @@
     <!-- custom javascript -->
     <script src="{{asset('vendor/front/js/script.js')}}" type="text/javascript"></script>
 
+    @livewireStyles
 </head>
 
 <body>
