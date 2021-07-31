@@ -61,6 +61,8 @@ class ProductDetail extends Component
 
     public function addToCart()
     {
+        if(!auth()->check())
+            return redirect()->route('login');
         foreach ($this->idsOfSelectedVariants as $variantId) {
             $variant = ProductVariant::find($variantId);
             if ($variant->stock < $this->quantity) {
