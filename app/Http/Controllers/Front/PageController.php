@@ -16,4 +16,8 @@ class PageController extends Controller
     public function productDetail(Product $product) {
         return view('front.pages.product-detail', compact('product'));
     }
+
+    public function cart() {
+        return view('front.pages.cart');
+    }
 }
