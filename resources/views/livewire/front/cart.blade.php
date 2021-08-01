@@ -2,7 +2,6 @@
     <div class="row">
         <main class="col-md-9">
             <div class="card">
-
                 <table class="table table-borderless table-shopping-cart">
                     <thead class="text-muted">
                     <tr class="small text-uppercase">
@@ -13,39 +12,46 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>
-                            <figure class="itemside">
-                                <div class="aside"><img src="images/items/1.jpg" class="img-sm"></div>
-                                <figcaption class="info">
-                                    <a href="#" class="title text-dark">Some name of item goes here nice</a>
-                                    <p class="text-muted small">Size: XL, Color: blue, <br> Brand: Gucci</p>
-                                </figcaption>
-                            </figure>
-                        </td>
-                        <td>
-                            <select class="form-control">
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                            </select>
-                        </td>
-                        <td>
-                            <div class="price-wrap">
-                                <var class="price">$1156.00</var>
-                                <small class="text-muted"> $315.20 each </small>
-                            </div> <!-- price-wrap .// -->
-                        </td>
-                        <td class="text-right">
-                            <a data-original-title="Save to Wishlist" title="" href="" class="btn btn-light"
-                               data-toggle="tooltip"> <i class="fa fa-heart"></i></a>
-                            <a href="" class="btn btn-light"> Remove</a>
-                        </td>
-                    </tr>
+                    @foreach($cartItems as $cartItem)
+                        <tr wire:key="cartitem{{$cartItem->id}}">
+
+                            <td>
+                                <figure class="itemside">
+                                    <div class="aside"><img src="{{$cartItem->product->coverImagePath()}}"
+                                                            class="img-sm"></div>
+                                    <figcaption class="info">
+                                        <a href="{{route('front.productDetail', [$cartItem->product->slug])}}"
+                                           class="title text-dark">{{$cartItem->product->name}}</a>
+                                        <p class="text-muted small">
+                                            @foreach($cartItem->variants() as $variant)
+                                                {{$variant->name->name}}: {{$variant->value->value}} <br>
+                                            @endforeach
+                                        </p>
+                                    </figcaption>
+                                </figure>
+                            </td>
+                            <td>
+                                @livewire('front.cart-item-quantity', ['cartItem' => $cartItem])
+
+                            </td>
+                            <td>
+                                <div class="price-wrap">
+                                    <var class="price">
+                                        @livewire('front.cart-item-price', ['cartItem' => $cartItem])
+                                    </var>
+                                    <small class="text-muted"> ${{$cartItem->price()}} each </small>
+                                </div> <!-- price-wrap .// -->
+                            </td>
+                            <td class="text-right">
+                                <a data-original-title="Save to Wishlist" title="" href="" class="btn btn-light"
+                                   data-toggle="tooltip"> <i class="fa fa-heart"></i></a>
+                                <a href="" class="btn btn-light" wire:click.prevent="removeItem({{$cartItem->id}})"> Remove</a>
+                            </td>
+                            {{--                            <livewire:cart-item :cartItem="{{$cartItem}}" :wire:key="cart_item{{$cartItem->id}}"/>--}}
+                        </tr>
+                    @endforeach
                     </tbody>
                 </table>
-
                 <div class="card-body border-top">
                     <a href="#" class="btn btn-primary float-md-right"> Make Purchase <i
                                 class="fa fa-chevron-right"></i> </a>
