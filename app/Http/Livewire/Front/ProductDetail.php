@@ -13,6 +13,8 @@ class ProductDetail extends Component
 
     public $variantGroups;
     public $allVariants = [];
+    public $price;
+    public $singlePrice;
 
     public $idsOfSelectedVariants = [];
 
@@ -46,22 +48,26 @@ class ProductDetail extends Component
 
             $this->idsOfSelectedVariants[$propertyNameId] = $lowestPriceVariant['id'];
         }
+        $this->calculatePrice();
     }
 
     public function increaseQuantity()
     {
         $this->quantity += 1;
+        $this->calculatePrice();
     }
 
     public function decreaseQuantity()
     {
-        if ($this->quantity > 1)
+        if ($this->quantity > 1) {
             $this->quantity -= 1;
+            $this->calculatePrice();
+        }
     }
 
     public function addToCart()
     {
-        if(!auth()->check())
+        if (!auth()->check())
             return redirect()->route('login');
         foreach ($this->idsOfSelectedVariants as $variantId) {
             $variant = ProductVariant::find($variantId);
@@ -84,5 +90,29 @@ class ProductDetail extends Component
             ]
         );
         $this->emit('updateCart');
+    }
+
+    public function calculatePrice()
+    {
+        foreach ($this->idsOfSelectedVariants as $variantId) {
+            $variant = ProductVariant::find($variantId);
+            if ($variant->is_price_using === 1) {
+                $this->singlePrice = $variant->price;
+                $this->price = $this->singlePrice * $this->quantity;
+                return false;
+            }
+        }
+        $this->singlePrice = $this->product->price;
+        $this->price = $this->singlePrice * $this->quantity;
+    }
+
+    public function updatedIdsOfSelectedVariants()
+    {
+        $this->calculatePrice();
+    }
+
+    public function multiplyPriceAndQuantity()
+    {
+        $this->price = $this->singlePrice * $this->quantity;
     }
 }

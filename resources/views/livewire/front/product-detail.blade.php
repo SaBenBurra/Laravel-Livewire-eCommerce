@@ -4,7 +4,7 @@
             <aside class="col-md-6">
                 <article class="gallery-wrap">
                     <div class="img-big-wrap">
-                        <div><a href="#"><img src="{{asset($product->images[0]->path)}}"></a></div>
+                        <div><a href="#"><img src="{{$product->coverImagePath()}}"></a></div>
                     </div> <!-- slider-product.// -->
                     <div class="thumbs-wrap">
                         @foreach($product->images as $image)
@@ -37,7 +37,7 @@
                     </div> <!-- rating-wrap.// -->
 
                     <div class="mb-3">
-                        <var class="price h4">${{$product['price']}}</var>
+                        <var class="price h4">${{$price}}</var>
                     </div> <!-- price-detail-wrap .// -->
 
                     <p>{{$product['description']}}</p>
