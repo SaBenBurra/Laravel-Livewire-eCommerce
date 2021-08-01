@@ -32,8 +32,9 @@ class Product extends Model
         return $this->hasMany(ProductImage::class)->orderBy('place_number');
     }
 
-    public function coverImagePath() {
-        return count($this->images) > 0 ? $this->images[0]->path : "https://via.placeholder.com/300x400";
+    public function coverImagePath()
+    {
+        return count($this->images) > 0 ? asset($this->images[0]->path) : "https://via.placeholder.com/300x400";
     }
 
     public function properties()
