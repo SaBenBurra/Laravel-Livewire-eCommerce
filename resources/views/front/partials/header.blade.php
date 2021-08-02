@@ -4,7 +4,9 @@
             <div class="row align-items-center">
                 <div class="col-lg-2 col-4">
                     <div class="brand-wrap">
-                        <img class="logo" src="{{asset('vendor/front/images/logo.png')}}">
+                        <a href="{{route('front.main')}}">
+                            <img class="logo" src="{{asset('vendor/front/images/logo.png')}}">
+                        </a>
                     </div> <!-- brand-wrap.// -->
                 </div>
                 <div class="col-lg-6 col-sm-12 order-3 order-lg-2">
@@ -22,13 +24,13 @@
                 <div class="col-lg-4 col-sm-6 col-8 order-2 order-lg-3">
                     <div class="float-md-right">
                         @auth
-                        <div class="widget-header  mr-3">
-                            @livewire('front.cart-icon')
-                        </div>
+                            <div class="widget-header  mr-3">
+                                @livewire('front.cart-icon')
+                            </div>
                         @endauth
                         <div class="widget-header icontext">
                             @auth
-                            <a href="#" class="icon icon-sm rounded-circle border"><i class="fa fa-user"></i></a>
+                                <a href="#" class="icon icon-sm rounded-circle border"><i class="fa fa-user"></i></a>
                             @endauth
                             <div class="text">
                                 <span class="text-muted">Welcome!</span>
@@ -36,14 +38,14 @@
                                     {{auth()->user()->name}}
                                     <form style="display:inline" action="{{route('logout')}}" method="POST">
                                         @csrf
-                                        <input type="submit" value="Logout" />
+                                        <input type="submit" value="Logout"/>
                                     </form>
                                 @endauth
                                 @guest
-                                <div>
-                                    <a href="{{route('login')}}">Sign in</a> |
-                                    <a href="{{route('register')}}"> Register</a>
-                                </div>
+                                    <div>
+                                        <a href="{{route('login')}}">Sign in</a> |
+                                        <a href="{{route('register')}}"> Register</a>
+                                    </div>
                                 @endguest
                             </div>
                         </div>
