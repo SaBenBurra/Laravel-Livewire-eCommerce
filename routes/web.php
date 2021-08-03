@@ -16,13 +16,15 @@ use Illuminate\Support\Facades\Route;
 Route::group(['as' => 'front.'], function () {
     Route::get('/', [\App\Http\Controllers\Front\PageController::class, 'main'])->name('main');
     Route::get('/product-detail/{product:slug}', [\App\Http\Controllers\Front\PageController::class, 'productDetail'])->name('productDetail');
-    Route::get('/cart', [\App\Http\Controllers\Front\PageController::class, 'cart'])->name('cart');
-    Route::get('/dashboard', [\App\Http\Controllers\Front\PageController::class, 'dashboard'])->name('dashboard');
-    Route::get('/profile', [\App\Http\Controllers\Front\PageController::class, 'profile'])->name('profile');
 
 
-    Route::post('/profile-update', [\App\Http\Controllers\Front\UserController::class, 'updateUserData'])->name('updateUserData');
-    Route::post('/password-update', [\App\Http\Controllers\Front\UserController::class, 'updateUserPassword'])->name('updateUserPassword');
+    Route::group(['middleware' => 'auth'], function () {
+        Route::get('/cart', [\App\Http\Controllers\Front\PageController::class, 'cart'])->name('cart');
+        Route::get('/dashboard', [\App\Http\Controllers\Front\PageController::class, 'dashboard'])->name('dashboard');
+        Route::get('/profile', [\App\Http\Controllers\Front\PageController::class, 'profile'])->name('profile');
+        Route::post('/profile-update', [\App\Http\Controllers\Front\UserController::class, 'updateUserData'])->name('updateUserData');
+        Route::post('/password-update', [\App\Http\Controllers\Front\UserController::class, 'updateUserPassword'])->name('updateUserPassword');
+    });
 });
 
 Route::group(['prefix' => 'panel', 'as' => 'panel.', 'middleware' => ['admin_check']], function () {
