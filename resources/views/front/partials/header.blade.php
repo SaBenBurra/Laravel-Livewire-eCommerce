@@ -30,7 +30,7 @@
                         @endauth
                         <div class="widget-header icontext">
                             @auth
-                                <a href="#" class="icon icon-sm rounded-circle border"><i class="fa fa-user"></i></a>
+                                <a href="{{route('front.dashboard')}}" class="icon icon-sm rounded-circle border"><i class="fa fa-user"></i></a>
                             @endauth
                             <div class="text">
                                 <span class="text-muted">Welcome!</span>
