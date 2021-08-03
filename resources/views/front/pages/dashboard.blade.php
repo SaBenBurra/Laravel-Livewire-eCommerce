@@ -18,8 +18,8 @@
                 <p>Hello, {{auth()->user()->name}}</p>
                 <p>This is your dashboard</p>
                 <div class="row ml-3 mr-3">
-                    <a class="col-md" href="#">
-                        <div class="text-center p-4 dashboard-navigation-link">Account Settings</div>
+                    <a class="col-md" href="{{route('front.profile')}}">
+                        <div class="text-center p-4 dashboard-navigation-link">Profile</div>
                     </a>
                     <div class="col-1"></div>
                     <a class="col-md" href="#">

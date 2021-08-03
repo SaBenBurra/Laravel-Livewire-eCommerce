@@ -24,4 +24,8 @@ class PageController extends Controller
     public function dashboard() {
         return view('front.pages.dashboard');
     }
+
+    public function profile() {
+        return view('front.pages.profile');
+    }
 }
