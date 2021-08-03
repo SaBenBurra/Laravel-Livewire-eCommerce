@@ -17,6 +17,8 @@ Route::group(['as' => 'front.'], function () {
     Route::get('/', [\App\Http\Controllers\Front\PageController::class, 'main'])->name('main');
     Route::get('/product-detail/{product:slug}', [\App\Http\Controllers\Front\PageController::class, 'productDetail'])->name('productDetail');
     Route::get('/cart', [\App\Http\Controllers\Front\PageController::class, 'cart'])->name('cart');
+    Route::get('/dashboard', [\App\Http\Controllers\Front\PageController::class, 'dashboard'])->name('dashboard');
+
 });
 
 Route::group(['prefix' => 'panel', 'as' => 'panel.', 'middleware' => ['admin_check']], function () {

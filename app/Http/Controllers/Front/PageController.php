@@ -20,4 +20,8 @@ class PageController extends Controller
     public function cart() {
         return view('front.pages.cart');
     }
+
+    public function dashboard() {
+        return view('front.pages.dashboard');
+    }
 }
