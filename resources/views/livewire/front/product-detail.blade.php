@@ -80,6 +80,7 @@
 
                     <a wire:click.prevent="addToCart" class="btn  btn-primary">Add to cart <i
                                 class="fas fa-shopping-cart"></i></a>
+                    @livewire('front.favorite-button', ['product' => $product])
                 </article> <!-- product-info-aside .// -->
             </main> <!-- col.// -->
         </div> <!-- row.// -->
