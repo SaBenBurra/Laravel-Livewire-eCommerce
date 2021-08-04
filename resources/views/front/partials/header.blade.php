@@ -27,10 +27,16 @@
                             <div class="widget-header  mr-3">
                                 @livewire('front.cart-icon')
                             </div>
+                            <div class="widget-header  mr-3">
+                                <a href="{{route('front.favorites')}}" class="icon icon-sm rounded-circle border"><i
+                                            class="fa fa-heart"></i></a>
+                            </div>
                         @endauth
+
                         <div class="widget-header icontext">
                             @auth
-                                <a href="{{route('front.dashboard')}}" class="icon icon-sm rounded-circle border"><i class="fa fa-user"></i></a>
+                                <a href="{{route('front.dashboard')}}" class="icon icon-sm rounded-circle border"><i
+                                            class="fa fa-user"></i></a>
                             @endauth
                             <div class="text">
                                 <span class="text-muted">Welcome!</span>
