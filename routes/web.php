@@ -22,6 +22,8 @@ Route::group(['as' => 'front.'], function () {
         Route::get('/cart', [\App\Http\Controllers\Front\PageController::class, 'cart'])->name('cart');
         Route::get('/dashboard', [\App\Http\Controllers\Front\PageController::class, 'dashboard'])->name('dashboard');
         Route::get('/profile', [\App\Http\Controllers\Front\PageController::class, 'profile'])->name('profile');
+        Route::get('/favorites', [\App\Http\Controllers\Front\PageController::class, 'favorites'])->name('favorites');
+
         Route::post('/profile-update', [\App\Http\Controllers\Front\UserController::class, 'updateUserData'])->name('updateUserData');
         Route::post('/password-update', [\App\Http\Controllers\Front\UserController::class, 'updateUserPassword'])->name('updateUserPassword');
     });
