@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\FavoriteProduct;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -12,7 +13,8 @@ class PageController extends Controller
     public function main()
     {
         $lastProducts = Product::limit(8)->orderBy('id', 'desc')->get();
-        return view('front.pages.main-page', compact('lastProducts'));
+        $categories = Category::all();
+        return view('front.pages.main-page', compact('lastProducts', 'categories'));
     }
 
     public function productDetail(Product $product)

@@ -6,20 +6,9 @@
             <aside class="col-md-3">
                 <nav class="card">
                     <ul class="menu-category">
-                        <li><a href="#">Best clothes</a></li>
-                        <li><a href="#">Automobiles</a></li>
-                        <li><a href="#">Home interior</a></li>
-                        <li><a href="#">Electronics</a></li>
-                        <li><a href="#">Technologies</a></li>
-                        <li><a href="#">Digital goods</a></li>
-                        <li class="has-submenu"><a href="#">More items</a>
-                            <ul class="submenu">
-                                <li><a href="#">Submenu name</a></li>
-                                <li><a href="#">Great submenu</a></li>
-                                <li><a href="#">Another menu</a></li>
-                                <li><a href="#">Some others</a></li>
-                            </ul>
-                        </li>
+                        @foreach($categories as $category)
+                            <li><a href="#">{{$category->name}}</a></li>
+                        @endforeach
                     </ul>
                 </nav>
             </aside> <!-- col.// -->
@@ -42,16 +31,17 @@
 
             <div class="row">
                 @forelse($lastProducts as $product)
-                <div class="col-md-3">
-                    <div href="#" class="card card-product-grid">
-                        <a href="#" class="img-wrap"> <img src="{{$product->coverImagePath()}}"> </a>
-                        <figcaption class="info-wrap">
-                            <a href="{{route('front.productDetail', [$product->slug])}}" class="title">{{$product->name}}</a>
-                            <div class="price mt-1">${{$product->price}}</div> <!-- price-wrap.// -->
-                        </figcaption>
-                    </div>
-                </div> <!-- col.// -->
-                    @empty
+                    <div class="col-md-3">
+                        <div href="#" class="card card-product-grid">
+                            <a href="#" class="img-wrap"> <img src="{{$product->coverImagePath()}}"> </a>
+                            <figcaption class="info-wrap">
+                                <a href="{{route('front.productDetail', [$product->slug])}}"
+                                   class="title">{{$product->name}}</a>
+                                <div class="price mt-1">${{$product->price}}</div> <!-- price-wrap.// -->
+                            </figcaption>
+                        </div>
+                    </div> <!-- col.// -->
+                @empty
                     There is no products
                 @endforelse
             </div> <!-- row.// -->
