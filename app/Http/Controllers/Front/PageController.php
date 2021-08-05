@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\FavoriteProduct;
 use App\Models\Product;
-use Illuminate\Http\Request;
 
 class PageController extends Controller
 {
@@ -43,5 +42,11 @@ class PageController extends Controller
             ->with('product')
             ->get();
         return view('front.pages.favorites', compact('favoriteProducts'));
+    }
+
+    public function productsByCategory(Category $category)
+    {
+        $products = Product::where('category_id', $category->id)->paginate(12);
+        return view('front.pages.product-listby-category', compact('products', 'category'));
     }
 }

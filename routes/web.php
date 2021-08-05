@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::group(['as' => 'front.'], function () {
     Route::get('/', [\App\Http\Controllers\Front\PageController::class, 'main'])->name('main');
     Route::get('/product-detail/{product:slug}', [\App\Http\Controllers\Front\PageController::class, 'productDetail'])->name('productDetail');
+    Route::get('/category/{category:slug}', [\App\Http\Controllers\Front\PageController::class, 'productsByCategory'])->name('productsByCategory');
 
 
     Route::group(['middleware' => 'auth'], function () {
