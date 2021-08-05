@@ -7,7 +7,14 @@
             <label for="categoryName">Category Name:</label>
             <input class="form-control" type="text" name="name" id="categoryName"/>
             @error('name')
-                {{$message}}
+            {{$message}}
+            @enderror
+        </div>
+        <div class="form-group">
+            <label for="slug">Slug:</label>
+            <input class="form-control" type="text" name="slug" id="slug"/>
+            @error('slug')
+            {{$message}}
             @enderror
         </div>
         <input class="form-control" type="submit" value="Create"/>
