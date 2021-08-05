@@ -7,7 +7,7 @@
                 <nav class="card">
                     <ul class="menu-category">
                         @foreach($categories as $category)
-                            <li><a href="#">{{$category->name}}</a></li>
+                            <li><a href="{{route('front.productsByCategory', [$category->slug])}}">{{$category->name}}</a></li>
                         @endforeach
                     </ul>
                 </nav>
