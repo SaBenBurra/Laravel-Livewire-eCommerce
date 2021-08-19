@@ -25,6 +25,8 @@ Route::group(['as' => 'front.'], function () {
         Route::get('/profile', [\App\Http\Controllers\Front\PageController::class, 'profile'])->name('profile');
         Route::get('/favorites', [\App\Http\Controllers\Front\PageController::class, 'favorites'])->name('favorites');
 
+        Route::resource('address', \App\Http\Controllers\Front\AddressController::class);
+
         Route::post('/profile-update', [\App\Http\Controllers\Front\UserController::class, 'updateUserData'])->name('updateUserData');
         Route::post('/password-update', [\App\Http\Controllers\Front\UserController::class, 'updateUserPassword'])->name('updateUserPassword');
     });
