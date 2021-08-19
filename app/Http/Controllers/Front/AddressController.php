@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreAddressRequest;
 use App\Models\Address;
 use Illuminate\Http\Request;
 
@@ -18,9 +19,15 @@ class AddressController extends Controller
         return view('front.pages.address-create-page');
     }
 
-    public function store(Request $request)
+    public function store(StoreAddressRequest $request)
     {
-        //
+        $request->validated();
+        Address::create([
+            'user_id' => auth()->id(),
+            'address_name' => $request->address_name,
+            'address' => $request->province . "-" . $request->county . " " . $request->address,
+        ]);
+        return redirect()->route('front.address.index');
     }
 
     public function show(Address $address)
