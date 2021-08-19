@@ -6,17 +6,35 @@
                 <h2>Address Creating Page</h2>
             </div>
             <form method="POST" action="{{route('front.address.store')}}">
+                @csrf
                 <div class="form-group">
                     <label for="address_name">Address Name:</label>
-                    <input type="text" class="form-control" id="address_name" name="address_name"/>
+                    <input type="text" class="form-control" value="{{old('address_name')}}" id="address_name"
+                           name="address_name"/>
                     @error('address_name')
                     {{$message}}
                     @enderror
                 </div>
 
                 <div class="form-group">
+                    <label for="province">Province:</label>
+                    <input type="text" class="form-control" value="{{old('province')}}" id="province" name="province"/>
+                    @error('province')
+                    {{$message}}
+                    @enderror
+                </div>
+
+                <div class="form-group">
+                    <label for="county">County:</label>
+                    <input type="text" class="form-control" value="{{old('county')}}" id="county" name="county"/>
+                    @error('county')
+                    {{$message}}
+                    @enderror
+                </div>
+
+                <div class="form-group">
                     <label for="address">Address:</label>
-                    <textarea class="form-control" id="address" name="address"></textarea>
+                    <textarea class="form-control" id="address" name="address">{{old('address')}}</textarea>
                     @error('address')
                     {{$message}}
                     @enderror
