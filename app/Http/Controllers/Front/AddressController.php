@@ -22,12 +22,13 @@ class AddressController extends Controller
 
     public function store(StoreAddressRequest $request)
     {
-        $request->validated();
-        Address::create([
-            'user_id' => auth()->id(),
-            'address_name' => $request->address_name,
-            'address' => $request->province . "-" . $request->county . " " . $request->address,
-        ]);
+        $address = new Address();
+        $address->fill($request->validated());
+
+        $address->user_id = auth()->id();
+
+        $address->save();
+
         return redirect()->route('front.address.index');
     }
 
