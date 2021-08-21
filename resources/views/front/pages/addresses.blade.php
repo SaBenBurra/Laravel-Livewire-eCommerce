@@ -10,6 +10,8 @@
             @foreach($addresses as $address)
                 <hr>
                 <h3>{{$address->address_name}}</h3>
+                <p><b>Province: </b> {{$address->province}}</p>
+                <p><b>County: </b> {{$address->county}}</p>
                 <p>{{$address->address}}</p>
                 <a href="{{route('front.address.update', $address)}}">
                     <button class="btn btn-info">Update</button>
