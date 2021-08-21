@@ -40,11 +40,16 @@ class AddressController extends Controller
 
     public function edit(Address $address)
     {
+        if(auth()->user()->cannot('update', $address))
+            abort(403);
         return view('front.pages.address-edit-page', compact('address'));
     }
 
     public function update(UpdateAddressRequest $request, Address $address)
     {
+        if(auth()->user()->cannot('update', $address))
+            abort(403);
+
         $address->update($request->validated());
 
         return redirect()->route('front.address.index');
@@ -52,6 +57,9 @@ class AddressController extends Controller
 
     public function destroy(Address $address)
     {
+        if(auth()->user()->cannot('delete', $address))
+            abort(403);
+
         $address->delete();
         return redirect()->back();
     }
