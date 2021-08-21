@@ -11,8 +11,14 @@
                 <hr>
                 <h3>{{$address->address_name}}</h3>
                 <p>{{$address->address}}</p>
-                <a href="{{route('front.address.update', $address)}}"><button class="btn btn-info">Update</button></a>
-                <form style="display:inline" method="POST" action="{{route('front.address.destroy', $address)}}"><button class="btn btn-danger ml-2" type="submit">Remove</button></form>
+                <a href="{{route('front.address.update', $address)}}">
+                    <button class="btn btn-info">Update</button>
+                </a>
+                <form style="display:inline" method="POST" action="{{route('front.address.destroy', $address)}}">
+                    @csrf
+                    @method('DELETE')
+                    <button class="btn btn-danger ml-2" type="submit">Remove</button>
+                </form>
             @endforeach
         </div>
     </section>

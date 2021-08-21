@@ -48,6 +48,7 @@ class AddressController extends Controller
 
     public function destroy(Address $address)
     {
-        //
+        $address->delete();
+        return redirect()->back();
     }
 }
