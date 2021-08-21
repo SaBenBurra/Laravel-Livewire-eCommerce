@@ -13,7 +13,7 @@
                 <p><b>Province: </b> {{$address->province}}</p>
                 <p><b>County: </b> {{$address->county}}</p>
                 <p>{{$address->address}}</p>
-                <a href="{{route('front.address.update', $address)}}">
+                <a href="{{route('front.address.edit', $address)}}">
                     <button class="btn btn-info">Update</button>
                 </a>
                 <form style="display:inline" method="POST" action="{{route('front.address.destroy', $address)}}">
